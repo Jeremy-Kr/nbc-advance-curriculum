@@ -1,20 +1,40 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { postTodoList } from "../../redux/modules/todoList";
 import { Button } from "../Common";
 
 const TodoInput = () => {
+  const dispatch = useDispatch();
+  const todoTitleRef = useRef();
+  const todoContentRef = useRef();
+
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+    dispatch(
+      postTodoList({
+        title: todoTitleRef.current.value,
+        content: todoContentRef.current.value,
+      })
+    );
+  };
+
   return (
     <TodoInputWrapper>
-      <TodoInputBoxWrapper>
+      <TodoInputBoxWrapper
+        onSubmit={(e) => {
+          handleOnSubmit(e);
+        }}
+      >
         <div>
           <label htmlFor="todo-title">제목</label>
-          <TodoInputBox id="todo-title" />
+          <TodoInputBox ref={todoTitleRef} id="todo-title" />
         </div>
         <div>
           <label htmlFor="todo-content">내용</label>
-          <TodoInputBox id="todo-content" />
+          <TodoInputBox ref={todoContentRef} id="todo-content" />
         </div>
-        <Button>추가하기</Button>
+        <Button type="submit">추가하기</Button>
       </TodoInputBoxWrapper>
     </TodoInputWrapper>
   );
@@ -27,7 +47,7 @@ const TodoInputWrapper = styled.div`
   margin: 20px 0;
 `;
 
-const TodoInputBoxWrapper = styled.div`
+const TodoInputBoxWrapper = styled.form`
   width: auto;
   display: flex;
   justify-content: space-around;

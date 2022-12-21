@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, nanoid } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const name = "todoList";
@@ -21,6 +21,23 @@ export const getTodoList = createAsyncThunk(
   }
 );
 
+export const postTodoList = createAsyncThunk(
+  `${name}/postTodoList`,
+  async ({ title, content }, { fulfillWithValue, rejectWithValue }) => {
+    try {
+      const res = await axios.post("http://localhost:3001/todoList", {
+        title,
+        content,
+        isDone: false,
+        id: nanoid(),
+      });
+      return fulfillWithValue(res.data);
+    } catch (e) {
+      return rejectWithValue(e);
+    }
+  }
+);
+
 const todoListSlice = createSlice({
   name,
   initialState,
@@ -34,6 +51,18 @@ const todoListSlice = createSlice({
       state.isLoading = false;
     },
     [getTodoList.rejected]: (state, action) => {
+      state.error = action.error;
+      state.isLoading = false;
+    },
+    [postTodoList.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [postTodoList.fulfilled]: (state, action) => {
+      const newPostTodoList = [...state.todoListData, action.payload];
+      state.todoListData = newPostTodoList;
+      state.isLoading = false;
+    },
+    [postTodoList.rejected]: (state, action) => {
       state.error = action.error;
       state.isLoading = false;
     },

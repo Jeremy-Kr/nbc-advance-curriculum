@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { deleteTodoItem } from "../../redux/modules/todoList";
+import { deleteTodoItem, toggleTodoItem } from "../../redux/modules/todoList";
 import { Button } from "../Common";
 
 const TodoItem = ({ title, content, isDone, id }) => {
@@ -10,13 +10,22 @@ const TodoItem = ({ title, content, isDone, id }) => {
   const handleOnDeleteClick = () => {
     dispatch(deleteTodoItem(id));
   };
+
+  const handleOnToggleClick = () => {
+    dispatch(toggleTodoItem({ id, isDone }));
+  };
   return (
     <TodoItemWrapper>
       <TodoItemTitle>{title}</TodoItemTitle>
       <TodoItemContent>{content}</TodoItemContent>
       <div>
-        <Button>{isDone ? "취소" : "완료"}</Button>
-        <Button>수정하기</Button>
+        <Button
+          onClick={() => {
+            handleOnToggleClick();
+          }}
+        >
+          {isDone ? "취소" : "완료"}
+        </Button>
         <Button
           onClick={() => {
             handleOnDeleteClick();

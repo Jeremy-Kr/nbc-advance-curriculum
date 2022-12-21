@@ -1,11 +1,6 @@
-import React from "react";
 import styled from "styled-components";
 
-const Button = ({ children }) => {
-  return <CustomButton>{children}</CustomButton>;
-};
-
-const CustomButton = styled.button`
+export default styled.button`
   background-color: #fff;
   border: 1px solid #333;
   margin-right: 5px;
@@ -19,5 +14,3 @@ const CustomButton = styled.button`
     background-color: #fce7e7;
   }
 `;
-
-export default Button;

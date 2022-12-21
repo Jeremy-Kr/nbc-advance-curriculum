@@ -13,6 +13,7 @@ const FooterContainer = styled.footer`
   display: flex;
   justify-content: center;
   margin: 10px;
+  color: #333;
 `;
 
 export default Footer;

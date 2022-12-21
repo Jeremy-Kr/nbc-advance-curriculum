@@ -18,6 +18,7 @@ const HeaderContainer = styled.header`
   background-color: #e9a79d;
   height: 50px;
   border-radius: 10px;
+  color: #333;
 `;
 
 const HeaderText = styled.span`

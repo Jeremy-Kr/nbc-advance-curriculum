@@ -38,6 +38,20 @@ export const postTodoList = createAsyncThunk(
   }
 );
 
+export const deleteTodoItem = createAsyncThunk(
+  `${name}/deleteTodoItem`,
+  async (todoItemId, { fulfillWithValue, rejectWithValue }) => {
+    try {
+      const res = await axios.delete(
+        `http://localhost:3001/todoList/${todoItemId}`
+      );
+      return fulfillWithValue(todoItemId);
+    } catch (e) {
+      return rejectWithValue(e);
+    }
+  }
+);
+
 const todoListSlice = createSlice({
   name,
   initialState,
@@ -58,11 +72,25 @@ const todoListSlice = createSlice({
       state.isLoading = true;
     },
     [postTodoList.fulfilled]: (state, action) => {
-      const newPostTodoList = [...state.todoListData, action.payload];
-      state.todoListData = newPostTodoList;
+      let newTodoList = [...state.todoListData, action.payload];
+      state.todoListData = newTodoList;
       state.isLoading = false;
     },
     [postTodoList.rejected]: (state, action) => {
+      state.error = action.error;
+      state.isLoading = false;
+    },
+    [deleteTodoItem.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [deleteTodoItem.fulfilled]: (state, action) => {
+      let newTodoList = state.todoListData.filter(
+        (item) => item.id !== action.payload
+      );
+      state.todoListData = newTodoList;
+      state.isLoading = false;
+    },
+    [deleteTodoItem.rejected]: (state, action) => {
       state.error = action.error;
       state.isLoading = false;
     },

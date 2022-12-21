@@ -12,6 +12,7 @@ const TodoList = ({ children, todoItems }) => {
           title={item.title}
           content={item.content}
           isDone={item.isDone}
+          id={item.id}
           key={item.id}
         />
       ))}

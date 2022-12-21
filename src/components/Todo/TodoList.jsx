@@ -2,12 +2,18 @@ import React from "react";
 import styled from "styled-components";
 import TodoItem from "./TodoItem";
 
-const TodoList = () => {
+const TodoList = ({ children, todoItems }) => {
   return (
     <TodoListWrapper>
-      <TodoListTitle>TODO / DONE</TodoListTitle>
-      <TodoItem />
-      <TodoItem />
+      <TodoListTitle>{children}</TodoListTitle>
+      {todoItems.map((item) => (
+        <TodoItem
+          title={item.title}
+          content={item.content}
+          isDone={item.isDone}
+          key={item.id}
+        />
+      ))}
     </TodoListWrapper>
   );
 };

@@ -42,10 +42,23 @@ export const deleteTodoItem = createAsyncThunk(
   `${name}/deleteTodoItem`,
   async (todoItemId, { fulfillWithValue, rejectWithValue }) => {
     try {
-      const res = await axios.delete(
-        `http://localhost:3001/todoList/${todoItemId}`
-      );
+      await axios.delete(`http://localhost:3001/todoList/${todoItemId}`);
       return fulfillWithValue(todoItemId);
+    } catch (e) {
+      return rejectWithValue(e);
+    }
+  }
+);
+
+export const toggleTodoItem = createAsyncThunk(
+  `${name}/toggleTodoItem`,
+  async ({ id, isDone }, { fulfillWithValue, rejectWithValue }) => {
+    try {
+      await axios.patch(`http://localhost:3001/todoList/${id}`, {
+        isDone: !isDone,
+      });
+      const res = await axios.get("http://localhost:3001/todoList");
+      return fulfillWithValue(res.data);
     } catch (e) {
       return rejectWithValue(e);
     }
@@ -91,6 +104,17 @@ const todoListSlice = createSlice({
       state.isLoading = false;
     },
     [deleteTodoItem.rejected]: (state, action) => {
+      state.error = action.error;
+      state.isLoading = false;
+    },
+    [toggleTodoItem.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [toggleTodoItem.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.todoListData = action.payload;
+    },
+    [toggleTodoItem.rejected]: (state, action) => {
       state.error = action.error;
       state.isLoading = false;
     },

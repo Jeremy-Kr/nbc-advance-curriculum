@@ -17,8 +17,14 @@ const TodoListContainer = () => {
 
   return (
     <TodoListContainerWrapper>
-      <TodoList todoItems={todoList}>TODO!</TodoList>
-      <TodoList todoItems={doneList}>DONE!</TodoList>
+      {todoState.isLoading ? (
+        <h2>Todo 리스트 가져오는중...</h2>
+      ) : (
+        <>
+          <TodoList todoItems={todoList}>TODO!</TodoList>
+          <TodoList todoItems={doneList}>DONE!</TodoList>
+        </>
+      )}
     </TodoListContainerWrapper>
   );
 };

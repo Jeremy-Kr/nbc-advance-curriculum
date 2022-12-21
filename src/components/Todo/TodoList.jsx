@@ -6,6 +6,7 @@ const TodoList = ({ children, todoItems }) => {
   return (
     <TodoListWrapper>
       <TodoListTitle>{children}</TodoListTitle>
+
       {todoItems.map((item) => (
         <TodoItem
           title={item.title}

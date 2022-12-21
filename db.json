@@ -1,0 +1,16 @@
+{
+  "todoList": [
+    {
+      "title": "initTitle",
+      "content": "initContent",
+      "isDone": false,
+      "id": "temp11111"
+    },
+    {
+      "title": "initTitle2",
+      "content": "initContent2",
+      "isDone": true,
+      "id": "temp222222"
+    }
+  ]
+}

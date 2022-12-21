@@ -2,13 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import { Button } from "../Common";
 
-const TodoItem = () => {
+const TodoItem = ({ title, content, isDone }) => {
   return (
     <TodoItemWrapper>
-      <TodoItemTitle> Todo 제목 </TodoItemTitle>
-      <TodoItemContent>Todo 내용</TodoItemContent>
+      <TodoItemTitle>{title}</TodoItemTitle>
+      <TodoItemContent>{content}</TodoItemContent>
       <div>
-        <Button>완료/취소</Button>
+        <Button>{isDone ? "취소" : "완료"}</Button>
         <Button>수정하기</Button>
         <Button>삭제</Button>
       </div>

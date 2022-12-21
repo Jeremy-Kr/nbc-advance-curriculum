@@ -32,6 +32,7 @@ const TodoListContainer = () => {
 const TodoListContainerWrapper = styled.main`
   display: flex;
   justify-content: space-around;
+  align-items: flex-start;
 `;
 
 export default TodoListContainer;

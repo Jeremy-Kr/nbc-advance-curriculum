@@ -1,11 +1,12 @@
 import { GlobalStyle, Layout } from "./components/Common";
-import { TodoListContainer } from "./components/Todo";
+import { TodoInput, TodoListContainer } from "./components/Todo";
 
 function App() {
   return (
     <>
       <GlobalStyle />
       <Layout>
+        <TodoInput />
         <TodoListContainer />
       </Layout>
     </>

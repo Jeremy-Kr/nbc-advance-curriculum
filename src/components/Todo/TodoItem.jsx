@@ -1,19 +1,11 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { deleteTodoItem, toggleTodoItem } from "../../redux/modules/todoList";
+import { useTodo } from "../../customHooks/useTodo";
 import { Button } from "../Common";
 
 const TodoItem = ({ title, content, isDone, id }) => {
-  const dispatch = useDispatch();
+  const { deleteTodo, toggleTodo } = useTodo();
 
-  const handleOnDeleteClick = () => {
-    dispatch(deleteTodoItem(id));
-  };
-
-  const handleOnToggleClick = () => {
-    dispatch(toggleTodoItem({ id, isDone }));
-  };
   return (
     <TodoItemWrapper>
       <TodoItemTitle>{title}</TodoItemTitle>
@@ -21,14 +13,14 @@ const TodoItem = ({ title, content, isDone, id }) => {
       <div>
         <Button
           onClick={() => {
-            handleOnToggleClick();
+            toggleTodo({ id, isDone });
           }}
         >
           {isDone ? "취소" : "완료"}
         </Button>
         <Button
           onClick={() => {
-            handleOnDeleteClick();
+            deleteTodo(id);
           }}
         >
           삭제

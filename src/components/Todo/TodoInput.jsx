@@ -1,22 +1,20 @@
-import React, { useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
+import React, { useRef } from "react";
 import styled from "styled-components";
-import { postTodoList } from "../../redux/modules/todoList";
+import { useTodo } from "../../customHooks/useTodo";
 import { Button } from "../Common";
 
 const TodoInput = () => {
-  const dispatch = useDispatch();
   const todoTitleRef = useRef();
   const todoContentRef = useRef();
 
+  const { addTodo } = useTodo();
+
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    dispatch(
-      postTodoList({
-        title: todoTitleRef.current.value,
-        content: todoContentRef.current.value,
-      })
-    );
+    addTodo({
+      title: todoTitleRef.current.value,
+      content: todoContentRef.current.value,
+    });
   };
 
   return (

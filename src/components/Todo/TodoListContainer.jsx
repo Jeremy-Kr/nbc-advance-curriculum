@@ -1,30 +1,19 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { getTodoList } from "../../redux/modules/todoList";
+import { useTodo } from "../../customHooks/useTodo";
 import { TodoList } from "./";
 
 const TodoListContainer = () => {
-  const todoState = useSelector((state) => state.todoList);
-  const dispatch = useDispatch();
+  const { isLoading, todoList, doneList } = useTodo();
 
-  useEffect(() => {
-    todoState.todoListData.length === 0 && dispatch(getTodoList());
-  }, [dispatch, todoState]);
-
-  const todoList = todoState.todoListData.filter((item) => !item.isDone);
-  const doneList = todoState.todoListData.filter((item) => item.isDone);
+  if (isLoading) {
+    return <div>로딩중...</div>;
+  }
 
   return (
     <TodoListContainerWrapper>
-      {todoState.isLoading ? (
-        <h2>Todo 리스트 가져오는중...</h2>
-      ) : (
-        <>
-          <TodoList todoItems={todoList}>TODO!</TodoList>
-          <TodoList todoItems={doneList}>DONE!</TodoList>
-        </>
-      )}
+      <TodoList todoItems={todoList}>TODO!</TodoList>
+      <TodoList todoItems={doneList}>DONE!</TodoList>
     </TodoListContainerWrapper>
   );
 };

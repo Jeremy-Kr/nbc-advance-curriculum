@@ -7,6 +7,7 @@ const initialState = {
   todoListData: [],
   isLoading: false,
   error: null,
+  isLoad: false,
 };
 
 export const getTodoList = createAsyncThunk(
@@ -68,7 +69,11 @@ export const toggleTodoItem = createAsyncThunk(
 const todoListSlice = createSlice({
   name,
   initialState,
-  reducers: {},
+  reducers: {
+    setLoad: (state, action) => {
+      state.isLoad = action.payload;
+    },
+  },
   extraReducers: {
     [getTodoList.pending]: (state, action) => {
       state.isLoading = true;
@@ -123,4 +128,5 @@ const todoListSlice = createSlice({
 
 const { reducer } = todoListSlice;
 
+export const { setLoad } = todoListSlice.actions;
 export default reducer;
